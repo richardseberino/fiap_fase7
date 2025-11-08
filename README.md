@@ -6,27 +6,27 @@
 
 <br>
 
-# Nome do projeto
+# Fase Final 7
 
-## Nome do grupo
+## Grupo DRELL
 
 ## 👨‍🎓 Integrantes: 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 1</a>
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 2</a>
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 3</a> 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 4</a> 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 5</a>
+- <a href="https://www.linkedin.com/in/douglas-souza-felipe-b815281a2/">Douglas</a>
+- <a href="https://www.linkedin.com/in/richard-marques-26b3a14/">Richard</a>
+- <a href="https://www.linkedin.com/in/lucasmedeirosleite">Lucas Medeiros</a> 
+- <a href="https://www.linkedin.com/in/mariana-cavalcante-oliveira-987684223/">Mariana Cavalcante Oliveira</a>
+- <a href="https://www.linkedin.com/in/luis-fernando-dos-santos-costa-b69894365/">Luis</a>
 
 ## 👩‍🏫 Professores:
 ### Tutor(a) 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do Tutor</a>
+- <a href="https://github.com/leoruiz197">Leo Ruiz</a>
 ### Coordenador(a)
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do Coordenador</a>
+- <a href="https://www.linkedin.com/in/andregodoichiovato/">Andre Godoi</a>
 
 
 ## 📜 Descrição
 
-*Descreva seu projeto com base no texto do PBL (até 600 palavras)*
+Este é o repositório final onde consolidamos todas as entregas feitas durante o ano. 
 
 
 ## 📁 Estrutura de pastas
@@ -54,16 +54,8 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 ## 🗃 Histórico de lançamentos
 
-* 0.5.0 - XX/XX/2024
-    * 
-* 0.4.0 - XX/XX/2024
-    * 
-* 0.3.0 - XX/XX/2024
-    * 
-* 0.2.0 - XX/XX/2024
-    * 
-* 0.1.0 - XX/XX/2024
-    *
+* 0.1.0 - 08/11/2025
+    * Versão inicial
 
 ## 📋 Licença
 
