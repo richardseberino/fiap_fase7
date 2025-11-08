@@ -1,0 +1,8 @@
+tensorflow
+torch
+torchvision
+torchaudio
+keras
+tensorflow_datasets
+torch
+torchvision

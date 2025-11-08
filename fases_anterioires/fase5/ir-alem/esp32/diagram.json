@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "author": "Douglas de Souza Felipe",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -134.4, "left": -33.56, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -287.7, "left": -82.2, "attrs": {} },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr1",
+      "top": -121.6,
+      "left": -344.8,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:3V3", "ldr1:VCC", "red", [ "h0" ] ],
+    [ "esp:3V3", "dht1:VCC", "red", [ "h0" ] ],
+    [ "dht1:GND", "esp:GND.2", "black", [ "v9.6", "h163.2" ] ],
+    [ "dht1:SDA", "esp:4", "green", [ "h0.1", "v278.4", "h153.6", "v-96" ] ],
+    [ "ldr1:GND", "esp:GND.2", "black", [ "h105.6", "v210.8", "h172.8", "v-220.8" ] ],
+    [ "ldr1:AO", "esp:VP", "gold", [ "h57.6", "v-10.3" ] ]
+  ],
+  "dependencies": {}
+}
