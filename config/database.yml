@@ -1,0 +1,9 @@
+development:
+  adapter: mysql
+  container: mysql8
+  host: localhost
+  port: 3306
+  database: agro_dev
+  user: root
+  password:
+  charset: utf8mb4
