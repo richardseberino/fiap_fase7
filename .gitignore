@@ -2,6 +2,7 @@
 *.tsv
 *.xls
 *.xlsx
+*.pth
 
 CLAUDE.md
 .claude
