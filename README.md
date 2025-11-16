@@ -28,6 +28,15 @@
 
 Este é o repositório final onde consolidamos todas as entregas feitas durante o ano. 
 
+Fase 1: Modelagem de base de dados e algorítimo 
+
+Fase 2-4: implementação da base e integração com solução IoT que captura os dados e grava nesta base de dados
+
+Fase 5: Uso da computação em núvem para executar os projetos na AWS
+
+Fase 6: Reconhecimento de objetos em Imagem usando YOLO
+[Fase 6](fases_anteriores/fase6/README.md)
+
 
 ## 📁 Estrutura de pastas
 
