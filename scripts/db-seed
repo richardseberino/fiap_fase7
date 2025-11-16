@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# Database Seeding Script
+# This script runs the Python seeding script to populate the database with initial data
+
+set -e  # Exit on any error
+
+# Color codes for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Get script directory
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+
+SEED_SCRIPT="$PROJECT_ROOT/db/seeds.py"
+
+echo "============================================================"
+echo "Database Seeding Script"
+echo "============================================================"
+
+# Check if Python is installed
+if ! command -v python3 &> /dev/null; then
+    echo -e "${RED}Error: Python 3 is not installed${NC}"
+    echo "Please install Python 3 first"
+    exit 1
+fi
+
+# Check if seeds.py exists
+if [ ! -f "$SEED_SCRIPT" ]; then
+    echo -e "${RED}Error: Seed script not found at $SEED_SCRIPT${NC}"
+    exit 1
+fi
+
+# Check if required Python packages are installed
+echo -e "\n${YELLOW}Checking Python dependencies...${NC}"
+MISSING_DEPS=0
+
+if ! python3 -c "import yaml" &> /dev/null; then
+    echo -e "${RED}✗ PyYAML is not installed${NC}"
+    MISSING_DEPS=1
+else
+    echo -e "${GREEN}✓ PyYAML is installed${NC}"
+fi
+
+if ! python3 -c "import pymysql" &> /dev/null; then
+    echo -e "${RED}✗ pymysql is not installed${NC}"
+    MISSING_DEPS=1
+else
+    echo -e "${GREEN}✓ pymysql is installed${NC}"
+fi
+
+if [ $MISSING_DEPS -eq 1 ]; then
+    echo ""
+    echo -e "${YELLOW}Installing missing dependencies...${NC}"
+    pip3 install -r "$PROJECT_ROOT/requirements.txt"
+    echo -e "${GREEN}✓ Dependencies installed${NC}"
+fi
+
+# Make the seed script executable
+chmod +x "$SEED_SCRIPT"
+
+# Run the seed script
+echo -e "\n${YELLOW}Running seed script...${NC}"
+echo ""
+python3 "$SEED_SCRIPT"
+
+# Check if seeding was successful
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "============================================================"
+    echo -e "${GREEN}Database seeded successfully!${NC}"
+    echo "============================================================"
+    echo ""
+else
+    echo ""
+    echo -e "${RED}Error: Seeding failed${NC}"
+    exit 1
+fi

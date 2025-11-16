@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Database Configuration Reader Utility
+# Sources database configuration from config/database.yml into environment variables
+# Usage: source scripts/utils/read-db-config
+
+# Get project root (assumes this script is in PROJECT_ROOT/scripts/utils/)
+UTILS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT="$( cd "$UTILS_DIR/../.." && pwd )"
+
+CONFIG_FILE="$PROJECT_ROOT/config/database.yml"
+ENV=${ENV:-development}
+
+# Check if config file exists
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo -e "${RED:-}Error: Configuration file not found at $CONFIG_FILE${NC:-}" >&2
+    return 1 2>/dev/null || exit 1
+fi
+
+# Function to read YAML value for a given environment and key
+read_yaml() {
+    local env=$1
+    local key=$2
+    awk -v env="$env:" -v key="$key:" '
+        $0 == env { in_section=1; next }
+        in_section && /^[a-z_]+:/ && $0 !~ /^  / { in_section=0 }
+        in_section && $1 == key {
+            # Remove key and colon, then trim spaces
+            value = substr($0, index($0, ":") + 1)
+            gsub(/^[ \t]+|[ \t]+$/, "", value)
+            print value
+            exit
+        }
+    ' "$CONFIG_FILE"
+}
+
+# Load database configuration from YAML file
+DB_HOST=$(read_yaml "$ENV" "host")
+DB_PORT=$(read_yaml "$ENV" "port")
+DB_NAME=$(read_yaml "$ENV" "database")
+DB_USER=$(read_yaml "$ENV" "user")
+DB_PASSWORD=$(read_yaml "$ENV" "password")
+DB_CHARSET=$(read_yaml "$ENV" "charset")
+DB_CONTAINER=$(read_yaml "$ENV" "container")
+
+# Set defaults for optional values
+DB_CHARSET=${DB_CHARSET:-utf8mb4}
+DB_CONTAINER=${DB_CONTAINER:-mysql8}
+
+# Export variables so they're available to calling script
+export DB_HOST
+export DB_PORT
+export DB_NAME
+export DB_USER
+export DB_PASSWORD
+export DB_CHARSET
+export DB_CONTAINER
+
+# Validate required fields
+if [ -z "$DB_HOST" ] || [ -z "$DB_NAME" ]; then
+    echo -e "${RED:-}Error: Failed to load database configuration${NC:-}" >&2
+    return 1 2>/dev/null || exit 1
+fi
