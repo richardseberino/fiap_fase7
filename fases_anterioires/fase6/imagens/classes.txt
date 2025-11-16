@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 lagarta
 percevejo marrom
+=======
+garfo
+controle
+>>>>>>> 0903abcf88dc251a36f2293fce1c15578fbcfd68
