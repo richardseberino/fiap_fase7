@@ -35,7 +35,7 @@ Fase 2-4: implementação da base e integração com solução IoT que captura o
 Fase 5: Uso da computação em núvem para executar os projetos na AWS
 
 Fase 6: Reconhecimento de objetos em Imagem usando YOLO
-[Fase 6](fases_anteriores/fase6/README.md)
+[Fase 6](fases_anterioires/fase6/README.md)
 
 
 ## 📁 Estrutura de pastas
