@@ -1,0 +1,9 @@
+tensorflow
+torch
+torchaudio
+keras
+tensorflow_datasets
+flask
+torchvision
+numpy
+pillow

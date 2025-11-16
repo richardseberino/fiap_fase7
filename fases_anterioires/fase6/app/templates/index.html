@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faster R-CNN - Detecção de Objetos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .results {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #e9e9ff;
+            margin-bottom: 5px;
+            padding: 8px;
+            border-left: 5px solid #6c757d;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ Detecção de Objetos com Faster R-CNN</h1>
+        <hr>
+
+        <form method="POST" enctype="multipart/form-data">
+            <label for="file">Selecione uma Imagem:</label><br>
+            <input type="file" name="file" id="file" accept="image/*" required><br>
+            <input type="submit" value="Fazer Upload e Detectar">
+        </form>
+
+        {% if processed_image %}
+        <div class="results">
+            <h2>✔️ Resultado da Detecção</h2>
+            
+            {% if detections %}
+            <h3>Objetos Encontrados:</h3>
+            <ul>
+                {% for detection in detections %}
+                <li>{{ detection }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Nenhum objeto detectado acima do limiar de confiança.</p>
+            {% endif %}
+
+            <div class="image-container">
+                <h3>Imagem Processada:</h3>
+                <img src="data:image/png;base64,{{ processed_image }}" alt="Imagem Processada">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
