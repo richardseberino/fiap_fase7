@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Database Console Helper
+# Connects to the MySQL database with proper UTF-8 encoding
+# Reads configuration from config/database.yml
+
+set -e
+
+# Color codes for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+# Get script directory
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+
+# Load database configuration
+source "$SCRIPT_DIR/utils/read-db-config"
+
+echo -e "${GREEN}Connecting to MySQL database '$DB_NAME' with UTF-8 encoding...${NC}"
+echo -e "${YELLOW}Environment: ${ENV:-development}${NC}"
+echo -e "${YELLOW}User: $DB_USER${NC}"
+echo ""
+
+# Prompt for password if not set in config
+if [ -z "$DB_PASSWORD" ]; then
+    read -sp "Enter password for user '$DB_USER' (press Enter if no password): " USER_PASSWORD
+    echo ""
+else
+    USER_PASSWORD="$DB_PASSWORD"
+fi
+
+# Connect with or without password
+if [ -z "$USER_PASSWORD" ]; then
+    # No password - don't use -p flag at all
+    docker exec -it "$DB_CONTAINER" mysql \
+      -u "$DB_USER" \
+      --default-character-set="$DB_CHARSET" \
+      "$DB_NAME"
+else
+    # With password
+    docker exec -it "$DB_CONTAINER" mysql \
+      -u "$DB_USER" \
+      -p"${USER_PASSWORD}" \
+      --default-character-set="$DB_CHARSET" \
+      "$DB_NAME"
+fi
