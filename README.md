@@ -39,6 +39,8 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>config</b>: Posicione aqui arquivos de configuração que são usados para definir parâmetros e ajustes do projeto.
 
+- <b>db</b>: Arquivos de banco de dados em geral como `schema.sql` e `seeds.py`.
+
 - <b>document</b>: aqui estão todos os documentos do projeto que as atividades poderão pedir. Na subpasta "other", adicione documentos complementares e menos importantes.
 
 - <b>scripts</b>: Posicione aqui scripts auxiliares para tarefas específicas do seu projeto. Exemplo: deploy, migrações de banco de dados, backups.
@@ -47,10 +49,25 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>README.md</b>: arquivo que serve como guia e explicação geral sobre o projeto (o mesmo que você está lendo agora).
 
+## Pré requisitos para rodar localmente:
+* Docker instalado
+* MySQL 8 container rodando (atualize o arquivo `config/database.yml` e substitua a configuração `container` com o nome do seu container)
+
 ## 🔧 Como executar o código
 
 *Acrescentar as informações necessárias sobre pré-requisitos (IDEs, serviços, bibliotecas etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o seu código e executá-lo a partir de sua máquina ou seu repositório. Considere a explicação organizada em fase.*
 
+### Banco de dados
+
+#### Acessando
+Para acessar o banco de dados execute no terminal o comando:
+* `./scripts/db-console`
+
+#### Criando schema do banco
+* Execute `./scripts/db-setup` no terminal.
+
+#### Adicionando dados no banco
+* Execute `./scripts/db-seed` no terminal
 
 ## 🗃 Histórico de lançamentos
 
