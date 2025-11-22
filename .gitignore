@@ -2,10 +2,8 @@
 *.tsv
 *.xls
 *.xlsx
-<<<<<<< HEAD
 *.pth
-=======
->>>>>>> 0903abcf88dc251a36f2293fce1c15578fbcfd68
+.venv
 
 CLAUDE.md
 .claude
