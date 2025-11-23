@@ -82,13 +82,17 @@ cmd /c "docker exec -i mysql mysql -u root -proot agro_dev < db/schema.sql"
 ```
 #### 1.3 Popula o banco com dados de exemplo
 * Execute o comando abaixo para carregar os dados na base MySQL
-```python .\db\seeds.py```
+```
+python .\db\seeds.py
+```
 
 ### 2.0 API de Reconhecimento de imagens
 
 #### 2.1 Carregando o container com a API da aplicação 
 * Execute o comando abaixo:
-```docker run -tid -p 5000:5000 seberino/faster-cnn:1.1 ```
+```
+docker run -tid -p 5000:5000 seberino/faster-cnn:1.1 
+```
 
 ### 3.0 Interface Principal
 Para carregar a interface princpal da aplicação, baseada em Streamlit, precisamos do Python 3.9 ou superior
@@ -102,11 +106,15 @@ python -m venv .venv
 
 #### 3.2 Instale as dependencias
 * Execute o comando abaixo para instalar as dependencias do projeto
-```python -m pip install -r requirements.txt``` 
+```
+python -m pip install -r requirements.txt
+``` 
 
 #### 3.3 Execute a aplicação
 * Execute o comando abaixo para executar a aplicação principal, este comando já deve abrir seu navegador com a página padrão da aplicação
-```python -m streamlit run .\src\ui\app.py```
+```
+python -m streamlit run .\src\ui\app.py
+```
 
 ## 🗃 Histórico de lançamentos
 
