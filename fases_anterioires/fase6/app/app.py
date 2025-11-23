@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 import io
 import base64
-from flask import Flask, request, render_template, redirect, url_for, send_from_directory
+from flask import Flask, request, render_template, redirect, url_for, send_from_directory, jsonify
 
 # --- Configurações ---
 app = Flask(__name__)
@@ -152,6 +152,31 @@ def upload_file():
                                    detections=detections)
             
     return render_template('index.html', processed_image=None, detections=None)
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    """Rota da API para fazer a predição e retornar JSON."""
+    if 'file' not in request.files:
+        return jsonify({"error": "Nenhum arquivo enviado"}), 400
+    
+    file = request.files['file']
+    
+    if file.filename == '':
+        return jsonify({"error": "Nome de arquivo vazio"}), 400
+
+    if file:
+        try:
+            image_data = file.read()
+            processed_image_base64, detections = detect_and_draw(image_data)
+            
+            return jsonify({
+                "image": processed_image_base64,
+                "detections": detections
+            })
+        except Exception as e:
+            return jsonify({"error": f"Erro ao processar a imagem: {str(e)}"}), 500
+            
+    return jsonify({"error": "Arquivo inválido"}), 400
 
 # --- Execução ---
 if __name__ == '__main__':
