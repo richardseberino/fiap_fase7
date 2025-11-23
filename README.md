@@ -47,6 +47,8 @@ Porém para rodar este projeto / repositório, você não precisa fazer estas et
 
 
 ### Fase 5: Uso da computação em núvem para executar os projetos na AWS
+Nesta etapa vamos integrar o comportamento das analises feitas na lavoura com um sistema de notificação na AWS com uso dos componentes SNS, Lambda e API Gateway. 
+
 
 ### Fase 6: Reconhecimento de objetos em Imagem usando YOLO
 Segue a documentação do passo a passo realizado via Jupyter Notebook para preparar os dados e treinar um modelo de IA que reconhece 2 tipos de pragas em fotos da lavoura: Percevejo marron e Lagarta.
@@ -109,23 +111,124 @@ python .\db\seeds.py
 docker run -tid -p 5000:5000 --name=api-yolo seberino/faster-cnn:1.1 
 ```
 
-### 3.0 Interface Principal
+### 3.0 Noticação / Alertas
+Vamos configurar o sistema de notificação usando os recursos da AWS
+
+#### 3.1 Criando um Topico SNS
+* Navegue na sua console da AWS até o item SNS e clique no botão "Create Topic"
+[Passo 1](assets/topic_1_a.png)
+
+* Escolha a opção standard e coloque o nome "alerta-pragras" e clique no botão "Create Topic"
+[Passo 2](assets/topic_1_b.png)
+
+* Após a criação recupere (e guarde em algum lugar) o endereço ARN do topico que criamos.
+[Passo 3](assets/topic_1_c.png)
+
+#### 3.2 Criando uma função Lambda
+* Navegue até a página do recurso Lambda na sua console da AWS, e clique em "Create Function"
+[Passo 1](assets/lambda_1_a.png)
+
+* Selecione a opção "Author from Scrach", defina o nome "processa-alerta", e clique em "Create Function"
+[Passo 2](assets/lambda_1_b.png)
+
+* No editor que abrir copie e cole o código a seguir, e depois clique em "Add environment variables":
+```
+import json
+import boto3
+import os
+def lambda_handler(event, context):
+    sns_client = boto3.client("sns", region_name="sa-east-1")  
+    SNS_TOPIC_ARN = os.getenv("SNS_TOPIC_ARN")
+    
+    try:
+        if "body" not in event or not event["body"]:
+            return {"statusCode": 400, "body": json.dumps({"error": "Nenhum arquivo enviado"})}
+        
+        alerta = json.loads(event["body"])
+        mensagem = alerta.get("mensagem")
+        
+        if not mensagem:
+            return {"statusCode": 400, "body": json.dumps({"error": "Campo 'mensagem' é obrigatório"})}
+        
+        # Publica a mensagem no SNS
+        response = sns_client.publish(
+            TopicArn=SNS_TOPIC_ARN,
+            Message=json.dumps(mensagem),
+            Subject="Novo Alerta"
+        )
+        
+        return {
+            "statusCode": 200,
+            "body": json.dumps({
+                "message": "Alerta recebido e enviado para processamento",
+                "alerta": mensagem
+            })
+        }
+    except Exception as e:
+        return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
+```
+
+[Passo 3](assets/lambda_1_c.png)
+
+* No painel de variáveis de ambiente clique adicionar, informe o nome "SNS_TOPIC_ARN" e cole o valor que você copiou na estapa 3 da criação do Tópico SNS:
+[Passo 4](assets/lambda_1_d.png)
+
+* Agora clique no botão "deploy"
+[Passo 5](assets/lambda_1_e.png)
+
+#### 3.3 Expor a Função Lambda no API Gateway
+* Navegue até a página do recurso API Gateway da AWS e clique em "Create API"
+[Passo 1](assets/api_1_a.png)
+
+* Clique no botão "build" na opção "HTTP API"
+[Passo 2](assets/api_1_b.png)
+
+* Informe o nome "api-alerta-pragas" e clique em "Next" em todas as telas e na última em "Create"
+[Passo 3](assets/api_1_c.png)
+
+* Na tela principal da API que criamos, selecione a sub opção "Routes", e clique "Create" 
+[Passo 4](assets/api_1_d.png)
+
+* Informe o nome "alerta", marque a opção de método como "Post" e clique em "Create"
+[Passo 5](assets/api_1_e.png)
+
+* Voltando a tela de edição da nossa API, com a rota "/alertas" na opção filho "POST" selecionado clique no botão "Attach integration"
+[Passo 6](assets/api_1_f.png)
+
+* Clique no botão "Create and Attach integration"
+[Passo 7](assets/api_1_g.png)
+
+* Marque a opção do tipo de Integração como "Lamdba function", e selecione a função Lambda que criamos no passo 3.2 e clica em create
+[Passo 8](assets/api_1_h.png)
+
+#### 3.4 Cria subscripção para envio de e-mail
+
+* Devolta a tela das SNS na AWS, clique no tópico que criamos, depois selecione a aba "Subscription" 
+[Passo 1](assets/sub_1_a.png)
+
+* Selecione o protocolo com a opção "e-mail", no campo endpoint coloque o seu endereço de e-mail.
+[Passo 2](assets/sub_1_b.png)
+
+* A Etapa anterioir vai gerar um email que você deve receber na caixa de correio informada onde você precisa clicar em um link para confirmar aceitar notificações deste serviço
+
+
+### 4.0 Interface Principal
 Para carregar a interface princpal da aplicação, baseada em Streamlit, precisamos do Python 3.9 ou superior
 
-#### 3.1 Crie um ambiente novo
+#### 4.1 Crie um ambiente novo
 * Execute o comando abaixo para criar um ambiente novo e ativar ele
 ```
 python -m venv .venv
 .\.venv\Scriptsactivate 
 ```
 
-#### 3.2 Instale as dependencias
+#### 4.2 Instale as dependencias
 * Execute o comando abaixo para instalar as dependencias do projeto
 ```
 python -m pip install -r requirements.txt
 ``` 
 
-#### 3.3 Execute a aplicação
+#### 4.3 Execute a aplicação
 * Execute o comando abaixo para executar a aplicação principal, este comando já deve abrir seu navegador com a página padrão da aplicação
 ```
 python -m streamlit run .\src\ui\app.py

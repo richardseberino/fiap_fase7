@@ -1,0 +1,3 @@
+development:
+  url_api_aws: https://v9ogz3kix0.execute-api.sa-east-1.amazonaws.com/alerta
+  url_api_yolo: http://localhost:8000/predict

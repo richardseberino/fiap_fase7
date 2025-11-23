@@ -4,6 +4,22 @@ from PIL import Image
 import requests
 import io
 import base64
+import os
+import yaml
+
+def load_config():
+    config_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+        '../config',
+        'api.yml'
+    )
+    
+    if os.path.exists(config_path):
+        with open(config_path, 'r') as file:
+            config = yaml.safe_load(file)
+            env = os.getenv('ENV', 'development')
+            return config[env]
+    return None
 
 st.set_page_config(layout="wide", page_title="Detecção de Pragas")
 
@@ -12,6 +28,10 @@ st.write("Envie uma imagem para análise. O modelo irá detectar e identificar l
 
 # --- Uploader ---
 uploaded_file = st.file_uploader("Escolha uma imagem...", type=["jpg", "jpeg", "png"])
+
+config = load_config()
+api_url = config.get("url_api_yolo") if config else "http://127.0.0.1:5000/predict"
+api_alerta_aws = config.get("url_api_aws") if config else ""
 
 if uploaded_file is not None:
     image_bytes = uploaded_file.getvalue()
@@ -49,9 +69,12 @@ if uploaded_file is not None:
                     st.error("A API não retornou uma imagem processada.")
 
                 if detections:
+                    alerta_aws = "sem alertas"
                     st.write("Itens detectados:")
                     for detection in detections:
                         st.markdown(f"- **{detection}**")
+                        alertas_aws = detection
+                    response = requests.post(api_alerta_aws, json={"mensagem": alertas_aws})
                 else:
                     st.warning("Nenhuma praga foi detectada na imagem com o limiar de confiança definido.")
 
