@@ -28,6 +28,9 @@
 
 Este é o repositório final onde consolidamos todas as entregas feitas durante o ano. 
 
+Assista o video com a demonstração deste trabalho em tempo real, mas se preferir siga os passos da sessão "Como executar o código" e  roda essa solução no seu ambiente. 
+[![Assista ao vídeo](assets/logo-youtube.png)](https://youtu.be/Ayi1PYAkx48)
+
 ### Fase 1: Modelagem de base de dados e algorítimo 
 Esta foi a base de dados que modelamos no inicio do ano para armazenar os dados de forma estruturada das coletas organizados por localização, tipo e sensor.
 ![Diagrama do projeto](./assets/modelo_agro.png)
@@ -41,7 +44,7 @@ Aqui abaixo tem o link da documentação desta etapa que descreve e detalhes com
 [Fase 2-4](fases_anterrioires/fase4/README.md)
 
 Segue um video desta etapa funcionando de forma isolada:
-[![Assista ao vídeo](assets/logo-youtube.png)](https://www.youtube.com/watch?v=It2_9pf46x4)
+[Assista ao vídeo](assets/logo-youtube.png)
 
 Porém para rodar este projeto / repositório, você não precisa fazer estas etapas, mais abaixo na documentação existe um passo a passo para pareparar seu ambiente para executar tudo o que precisa para ele funcionar.
 
