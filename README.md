@@ -116,20 +116,20 @@ Vamos configurar o sistema de notificação usando os recursos da AWS
 
 #### 3.1 Criando um Topico SNS
 * Navegue na sua console da AWS até o item SNS e clique no botão "Create Topic"
-[Passo 1](assets/topic_1_a.png)
+![Passo 1](assets/topic_1_a.png)
 
 * Escolha a opção standard e coloque o nome "alerta-pragras" e clique no botão "Create Topic"
-[Passo 2](assets/topic_1_b.png)
+![Passo 2](assets/topic_1_b.png)
 
 * Após a criação recupere (e guarde em algum lugar) o endereço ARN do topico que criamos.
-[Passo 3](assets/topic_1_c.png)
+![Passo 3](assets/topic_1_c.png)
 
 #### 3.2 Criando uma função Lambda
 * Navegue até a página do recurso Lambda na sua console da AWS, e clique em "Create Function"
-[Passo 1](assets/lambda_1_a.png)
+![Passo 1](assets/lambda_1_a.png)
 
 * Selecione a opção "Author from Scrach", defina o nome "processa-alerta", e clique em "Create Function"
-[Passo 2](assets/lambda_1_b.png)
+![Passo 2](assets/lambda_1_b.png)
 
 * No editor que abrir copie e cole o código a seguir, e depois clique em "Add environment variables":
 ```
@@ -168,46 +168,46 @@ def lambda_handler(event, context):
         return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
 ```
 
-[Passo 3](assets/lambda_1_c.png)
+![Passo 3](assets/lambda_1_c.png)
 
 * No painel de variáveis de ambiente clique adicionar, informe o nome "SNS_TOPIC_ARN" e cole o valor que você copiou na estapa 3 da criação do Tópico SNS:
-[Passo 4](assets/lambda_1_d.png)
+![Passo 4](assets/lambda_1_d.png)
 
 * Agora clique no botão "deploy"
-[Passo 5](assets/lambda_1_e.png)
+![Passo 5](assets/lambda_1_e.png)
 
 #### 3.3 Expor a Função Lambda no API Gateway
 * Navegue até a página do recurso API Gateway da AWS e clique em "Create API"
-[Passo 1](assets/api_1_a.png)
+![Passo 1](assets/api_1_a.png)
 
 * Clique no botão "build" na opção "HTTP API"
-[Passo 2](assets/api_1_b.png)
+![Passo 2](assets/api_1_b.png)
 
 * Informe o nome "api-alerta-pragas" e clique em "Next" em todas as telas e na última em "Create"
-[Passo 3](assets/api_1_c.png)
+![Passo 3](assets/api_1_c.png)
 
 * Na tela principal da API que criamos, selecione a sub opção "Routes", e clique "Create" 
-[Passo 4](assets/api_1_d.png)
+![Passo 4](assets/api_1_d.png)
 
 * Informe o nome "alerta", marque a opção de método como "Post" e clique em "Create"
-[Passo 5](assets/api_1_e.png)
+![Passo 5](assets/api_1_e.png)
 
 * Voltando a tela de edição da nossa API, com a rota "/alertas" na opção filho "POST" selecionado clique no botão "Attach integration"
-[Passo 6](assets/api_1_f.png)
+![Passo 6](assets/api_1_f.png)
 
 * Clique no botão "Create and Attach integration"
-[Passo 7](assets/api_1_g.png)
+![Passo 7](assets/api_1_g.png)
 
 * Marque a opção do tipo de Integração como "Lamdba function", e selecione a função Lambda que criamos no passo 3.2 e clica em create
-[Passo 8](assets/api_1_h.png)
+![Passo 8](assets/api_1_h.png)
 
 #### 3.4 Cria subscripção para envio de e-mail
 
 * Devolta a tela das SNS na AWS, clique no tópico que criamos, depois selecione a aba "Subscription" 
-[Passo 1](assets/sub_1_a.png)
+![Passo 1](assets/sub_1_a.png)
 
 * Selecione o protocolo com a opção "e-mail", no campo endpoint coloque o seu endereço de e-mail.
-[Passo 2](assets/sub_1_b.png)
+![Passo 2](assets/sub_1_b.png)
 
 * A Etapa anterioir vai gerar um email que você deve receber na caixa de correio informada onde você precisa clicar em um link para confirmar aceitar notificações deste serviço
 
