@@ -29,7 +29,7 @@
 Este é o repositório final onde consolidamos todas as entregas feitas durante o ano. 
 
 Assista o video com a demonstração deste trabalho em tempo real, mas se preferir siga os passos da sessão "Como executar o código" e  roda essa solução no seu ambiente. 
-[![Assista ao vídeo](assets/logo-youtube.png)](https://youtu.be/Ayi1PYAkx48)
+[![Assista ao vídeo](assets/logo-youtube.png)](https://youtu.be/Ayi1PYAkx48)]
 
 ### Fase 1: Modelagem de base de dados e algorítimo 
 Esta foi a base de dados que modelamos no inicio do ano para armazenar os dados de forma estruturada das coletas organizados por localização, tipo e sensor.
