@@ -61,7 +61,3 @@ if uploaded_file is not None:
 
 else:
     st.info("Aguardando o envio de uma imagem.")
-
-st.markdown("---")
-st.write("Aplicação desenvolvida como parte da solução para o desafio da FIAP.")
-
