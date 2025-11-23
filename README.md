@@ -28,15 +28,30 @@
 
 Este é o repositório final onde consolidamos todas as entregas feitas durante o ano. 
 
-Fase 1: Modelagem de base de dados e algorítimo 
+### Fase 1: Modelagem de base de dados e algorítimo 
+Esta foi a base de dados que modelamos no inicio do ano para armazenar os dados de forma estruturada das coletas organizados por localização, tipo e sensor.
+![Diagrama do projeto](./assets/modelo_agro.png)
 
-Fase 2-4: implementação da base e integração com solução IoT que captura os dados e grava nesta base de dados
 
-Fase 5: Uso da computação em núvem para executar os projetos na AWS
+### Fase 2-4: implementação da base e integração com solução IoT que captura os dados e grava nesta base de dados
+Nestas etapas, evoluimos para ter um sensor IoT monitorando os locais de produtivos com sensores específicos e alimentar a base de dados feita na etapa anterior de forma automática
+![Diagrama do projeto](./assets/diagrama_esp32.png)
 
-Fase 6: Reconhecimento de objetos em Imagem usando YOLO
+Aqui abaixo tem o link da documentação desta etapa que descreve e detalhes como instanciar a base e popular ela com dados de sensores ESP32 simulados via Wokwi.
+[Fase 2-4](fases_anterrioires/fase4/README.md)
+
+Segue um video desta etapa funcionando de forma isolada:
+[![Assista ao vídeo](assets/logo-youtube.png)](https://www.youtube.com/watch?v=It2_9pf46x4)
+
+Porém para rodar este projeto / repositório, você não precisa fazer estas etapas, mais abaixo na documentação existe um passo a passo para pareparar seu ambiente para executar tudo o que precisa para ele funcionar.
+
+
+### Fase 5: Uso da computação em núvem para executar os projetos na AWS
+
+### Fase 6: Reconhecimento de objetos em Imagem usando YOLO
+Segue a documentação do passo a passo realizado via Jupyter Notebook para preparar os dados e treinar um modelo de IA que reconhece 2 tipos de pragas em fotos da lavoura: Percevejo marron e Lagarta.
 [Fase 6](fases_anterioires/fase6/README.md)
-
+Da mesma forma que a fase de 2-4 não é necessário reproduzir estes passos para testar o projeto. Temos uma imagem em container com a solução treinada que mais abaixo nesta documentação terá o comando necessário para subir esta parte da soluçaõ já configurada e treinada. 
 
 ## 📁 Estrutura de pastas
 
