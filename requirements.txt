@@ -2,3 +2,10 @@ pymysql==1.1.0
 PyYAML==6.0.1
 streamlit
 cryptography
+tensorflow
+torch
+torchvision
+torchaudio
+keras
+tensorflow_datasets
+

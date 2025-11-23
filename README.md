@@ -66,17 +66,47 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 *Acrescentar as informações necessárias sobre pré-requisitos (IDEs, serviços, bibliotecas etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o seu código e executá-lo a partir de sua máquina ou seu repositório. Considere a explicação organizada em fase.*
 
-### Banco de dados
+### 1.0 Banco de dados
 
-#### Acessando
-Para acessar o banco de dados execute no terminal o comando:
-* `./scripts/db-console`
+#### 1.1 Carregando o conatainer com o MySQL
+Execute o comando abaixo para criar uma instancia de Banco de dados mySQL
+```
+docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=agro_dev -e MYSQL_USER=agro -e MYSQL_PASSWORD=agro1 -p 3306:3306 -v mysql_data:/var/lib/mysql docker.io/mysql:8.0
+```
+Este comando vai criar uma pasta mysql_data no diretório onde você estiver rodando o comando, pois caso precise parar e subir o ambiente os dados não se percam
 
-#### Criando schema do banco
-* Execute `./scripts/db-setup` no terminal.
+### 1.2 - Crie a estrutura das tabelas 
+Execute o comando abaixo para carregar o script SQL que cria a estrtura das tabelas e faZ a carga inicial de dados
+```
+cmd /c "docker exec -i mysql mysql -u root -proot agro_dev < db/schema.sql"
+```
+#### 1.3 Popula o banco com dados de exemplo
+* Execute o comando abaixo para carregar os dados na base MySQL
+```python .\db\seeds.py```
 
-#### Adicionando dados no banco
-* Execute `./scripts/db-seed` no terminal
+### 2.0 API de Reconhecimento de imagens
+
+#### 2.1 Carregando o container com a API da aplicação 
+* Execute o comando abaixo:
+```docker run -tid -p 5000:5000 seberino/faster-cnn:1.1 ```
+
+### 3.0 Interface Principal
+Para carregar a interface princpal da aplicação, baseada em Streamlit, precisamos do Python 3.9 ou superior
+
+#### 3.1 Crie um ambiente novo
+* Execute o comando abaixo para criar um ambiente novo e ativar ele
+```
+python -m venv .venv
+.\.venv\Scriptsactivate 
+```
+
+#### 3.2 Instale as dependencias
+* Execute o comando abaixo para instalar as dependencias do projeto
+```python -m pip install -r requirements.txt``` 
+
+#### 3.3 Execute a aplicação
+* Execute o comando abaixo para executar a aplicação principal, este comando já deve abrir seu navegador com a página padrão da aplicação
+```python -m streamlit run .\ui\app.py```
 
 ## 🗃 Histórico de lançamentos
 
