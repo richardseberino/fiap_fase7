@@ -106,7 +106,7 @@ python -m venv .venv
 
 #### 3.3 Execute a aplicação
 * Execute o comando abaixo para executar a aplicação principal, este comando já deve abrir seu navegador com a página padrão da aplicação
-```python -m streamlit run .\ui\app.py```
+```python -m streamlit run .\src\ui\app.py```
 
 ## 🗃 Histórico de lançamentos
 
