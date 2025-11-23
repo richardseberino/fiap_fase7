@@ -91,7 +91,7 @@ python .\db\seeds.py
 #### 2.1 Carregando o container com a API da aplicação 
 * Execute o comando abaixo:
 ```
-docker run -tid -p 5000:5000 seberino/faster-cnn:1.1 
+docker run -tid -p 5000:5000 --name=api-yolo seberino/faster-cnn:1.1 
 ```
 
 ### 3.0 Interface Principal
